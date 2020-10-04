@@ -16,7 +16,6 @@ app.get('/notes', function(req, res){
 })
 
 app.listen(PORT, function() {
-
       console.log('listening on PORT 3000')
 })
 
