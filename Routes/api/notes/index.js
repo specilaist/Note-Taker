@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const fs = require('fs');
-const data = require('../../../db/db.json');
+const db = require('../../../db/db.json');
 
 const { get } = require('..');
 
 router.get('/notes', function(req, res) {
-      res.json(data);
-      fs.readFile(data, 'utf8', function(err, data) {
+      res.json(db);
+      fs.readFile(db, 'utf8', function(err, data) {
             if (err) {
                   console.log(err);
             }
@@ -16,18 +16,23 @@ router.get('/notes', function(req, res) {
 
 router.post('/notes', function(req,res){
       const newNote = req.body;
-      const existingNote = fs.readFile(data, function(err, data) {
+      console.log(newNote);
+      fs.readFileSync(db, function(err, data) {
             if (err) {
                   console.log(err)
-            }
-            console.log(data)
+            };
+            console.log(data);
+            let newData = JSON.parse(data);
+            newNote.push(newData);
+            fs.writeFile(db, newNote, function(err,dat) {
+                  if(err) console.log(err)
+            });
       })
-      fs.writeFile(data, newNote,)
 })
 
 router.delete('/notes', function(req, res) {
       res.json(data);
-      
+
 })
 
 module.exports = router
