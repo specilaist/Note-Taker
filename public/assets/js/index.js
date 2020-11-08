@@ -32,6 +32,13 @@ const deleteNote = (id) => {
   });
 };
 
+
+
+
+
+
+
+
 // If there is an activeNote, display it, otherwise render empty inputs
 const renderActiveNote = () => {
   $saveNoteBtn.hide();
@@ -49,6 +56,13 @@ const renderActiveNote = () => {
   }
 };
 
+
+
+
+
+
+
+
 // Get the note data from the inputs, save it to the db and update the view
 const handleNoteSave = function () {
   const newNote = {
@@ -61,6 +75,12 @@ const handleNoteSave = function () {
     renderActiveNote();
   });
 };
+
+
+
+
+
+
 
 // Delete the clicked note
 const handleNoteDelete = function (event) {
@@ -91,6 +111,11 @@ const handleNewNoteView = function () {
   renderActiveNote();
 };
 
+
+
+
+
+
 // If a note's title or text are empty, hide the save button
 // Or else show it
 const handleRenderSaveBtn = function () {
@@ -100,6 +125,9 @@ const handleRenderSaveBtn = function () {
     $saveNoteBtn.show();
   }
 };
+
+
+
 
 // Render's the list of note titles
 const renderNoteList = (notes) => {
