@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const fs = require("fs");
-let db = require("../../../db/db.json");
+const db = require("../../../db/db.json");
 const path = require("path");
 const { request } = require("http");
 const { parse } = require("path");
@@ -19,16 +19,11 @@ router.post("/notes", function (req, res) {
     if (err) {
       console.log(err);
     }
-    let newData = JSON.parse(data);
+    const newData = JSON.parse(data);
     newData.push(newNote);
-    let jsonData = JSON.stringify(newData);
-    fs.writeFile(path.join(__dirname, "../../../db/db.json"), jsonData, function (err, data) {
-        if (err) {
-          console.log(err);
-      }
-      console.log(data);
-      res.json(newData);
-    });
+    const jsonData = JSON.stringify(newData);
+    fs.writeFileSync(path.join(__dirname, "../../../db/db.json"), jsonData);
+    res.json(newData);
   });
 });
 
@@ -48,10 +43,7 @@ router.delete("/notes/:id", function (req, res) {
       } return true
     });
     console.log('filtered db', filteredDb);
-    fs.writeFile(path.join(__dirname, "../../../db/db.json"), JSON.stringify(filteredDb), function (err, data) {
-      if (err) throw err;
-      console.log(data);
-    });
+    fs.writeFileSync(path.join(__dirname, "../../../db/db.json"), JSON.stringify(filteredDb));
     res.json(filteredDb);
   });
 });
