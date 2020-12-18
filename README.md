@@ -6,11 +6,23 @@ I established routes for getting and posting data.
 
 ## Issues
 
-I wasn't able to make the app work the way I wanted. I could make a get request, but could not do a post or delete request.
-For some reason the "router.post" function could not link to the "db.json" path.
-I might need to require the "path" component into the index.js file in order to make it work better. 
+* The app works on localhost:3001 but doesn't work quite well on the heroku deployment
+
+* I could make a get request, and a post request and a delete request
+      * The delete request took a little work, but I figured it out with a filter function.
+      * The routes work very well when using Postman
+      * All the requests work on localhost:3001, but they require the website to be reloaded in order to see the changes
+
+## For Later
+
+* I would like to make the page more dynamic. I could use React and state in order to make the pages render better.
+
+## Video
+
+![Video of App](./assets/noteTakerVid.gif)
 
 ## GitHub Links
 
-https://github.com/specilaist/Note-Taker
+Gihub page: https://github.com/specilaist/Note-Taker
+Heroku page: https://ebansnotes.herokuapp.com/
 
