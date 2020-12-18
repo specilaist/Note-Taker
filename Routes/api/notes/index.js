@@ -3,6 +3,7 @@ const fs = require("fs");
 let db = require("../../../db/db.json");
 const path = require("path");
 const { request } = require("http");
+const { parse } = require("path");
 
 router.get("/notes", function (req, res) {
   console.log("This is the get request", db);
@@ -32,28 +33,26 @@ router.post("/notes", function (req, res) {
 });
 
 router.delete("/notes/:id", function (req, res) {
-  console.log('This is the delete request', req.query.id);
-  const deletNote = JSON.stringify(req.query.id);
+  console.log('This is the delete request', req.params.id);
+  const deletNote = parseInt(req.params.id);
   fs.readFile(path.join(__dirname, '../../../db/db.json'), "utf8", function(err, data) {
     if (err) throw err;
     console.log(data);
     const newDelete = JSON.parse(data);
     console.log('This is data to be deleted', newDelete);
-    filteredDb = newDelete.filter(function (note) {
-      console.log('note.id variable', note.id);
-      console.log('deleteNote variable', deletNote);
-      if (note.id == parseInt(deletNote)) {
+    const filteredDb = newDelete.filter(newDeleted => {
+      console.log('deleted id', newDeleted.id)
+      console.log('delete note', deletNote)
+      if (newDeleted.id == parseInt(deletNote)) {
         return false;
-      }
-      return true;
+      } return true
     });
-    fs.writeFile(path.join(__dirname, "../../../db/db.json"), filteredDb, function (err, data) {
-      if (err) {
-        console.log(err);
-      }
+    console.log('filtered db', filteredDb);
+    fs.writeFile(path.join(__dirname, "../../../db/db.json"), JSON.stringify(filteredDb), function (err, data) {
+      if (err) throw err;
       console.log(data);
     });
-    res.json('response', filteredDb);
+    res.json(filteredDb);
   });
 });
 
