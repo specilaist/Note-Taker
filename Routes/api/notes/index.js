@@ -32,23 +32,29 @@ router.post("/notes", function (req, res) {
 });
 
 router.delete("/notes/:id", function (req, res) {
-  console.log('This is the delete request', req.body);
-  const deletNote = req.body;
-  fs.readFile(path.join(__dirname, '../../../db/db.json'), deletNote, function(err, data) {
+  console.log('This is the delete request', req.query.id);
+  const deletNote = JSON.stringify(req.query.id);
+  fs.readFile(path.join(__dirname, '../../../db/db.json'), "utf8", function(err, data) {
     if (err) throw err;
-    console.log('This is data to be deleted', data);
-  })
-  console.log(db);
-  db = db.filter(function (note) {
-    console.log(note.id);
-    console.log(req.params.id);
-    if (note.id === parseInt(req.params.id)) {
-      return false;
-    }
-    return true;
+    console.log(data);
+    const newDelete = JSON.parse(data);
+    console.log('This is data to be deleted', newDelete);
+    filteredDb = newDelete.filter(function (note) {
+      console.log('note.id variable', note.id);
+      console.log('deleteNote variable', deletNote);
+      if (note.id == parseInt(deletNote)) {
+        return false;
+      }
+      return true;
+    });
+    fs.writeFile(path.join(__dirname, "../../../db/db.json"), filteredDb, function (err, data) {
+      if (err) {
+        console.log(err);
+      }
+      console.log(data);
+    });
+    res.json('response', filteredDb);
   });
-
-  res.json(db);
 });
 
 module.exports = router;
